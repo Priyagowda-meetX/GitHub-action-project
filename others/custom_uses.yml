@@ -1,0 +1,10 @@
+name: On Pull Request Opened Custom Operation
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  custom:
+    name: some custom operation
+    uses: ./.github/workflows/custom_operation.yml
