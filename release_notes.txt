@@ -1,2 +1,1 @@
-1. Feature One
-2. Feature Two
+project init
