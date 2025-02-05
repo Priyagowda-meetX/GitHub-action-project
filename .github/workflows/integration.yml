@@ -1,9 +1,9 @@
 name: Android Continuous Integration
 
 on:
-  pull_request:
+  push:
     branches:
-      - develop
+      - main
 
 jobs:
   build:
