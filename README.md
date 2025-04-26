@@ -41,9 +41,9 @@ These secrets are retrieved in the pipeline to authenticate against AWS services
  * Details: Allows workflow to access the repository content.
    
 
- '''yaml 
+ ``` yaml 
  - name: Checkout Repository
    uses: actions/checkout@v3
-   '''
+   ```
 
 
