@@ -1,10 +1,10 @@
 # GitHub Actions CI/CD Pipeline Documentation
-# 1. Introduction
+## 1. Introduction
 This document explains the setup, workflow, and functioning of a CI/CD pipeline using GitHub Actions for deploying containerized applications to AWS ECS (Elastic Container Service).
-# The process involves:
+## The process involves:
   * Continuous Integration (CI): Building, testing, and preparing the application.
   * Continuous Deployment (CD): Pushing Docker images to AWS ECR and updating ECS tasks automatically after a pull request (PR) is merged.
-# 2. System Overview
+## 2. System Overview
   * Source Code Repository: GitHub
   * CI/CD Engine: GitHub Actions
   * Cloud Provider: Amazon Web Services (AWS)
@@ -14,10 +14,10 @@ This document explains the setup, workflow, and functioning of a CI/CD pipeline 
 
 ## Flow-of-GitHub-Action
 ![Flow of GitHub Action Diagram](Flow-of-GitHub-Actions.png) 
-# 3. Workflow Trigger
+## 3. Workflow Trigger
   * The workflow is triggered automatically upon PR Merge into the main branch (or a specified branch).
    
-# 4. Secrets Management
+## 4. Secrets Management
 In GitHub Repository → Settings → Secrets → Actions:
 
 * AWS_ACCESS_KEY_ID: Your AWS IAM User Access Key ID
@@ -25,7 +25,7 @@ In GitHub Repository → Settings → Secrets → Actions:
 
 These secrets are retrieved in the pipeline to authenticate against AWS services.
 
-# 5. GitHub Actions Workflow Stages
+## 5. GitHub Actions Workflow Stages
  The CI/CD pipeline is split into two main stages:
  ## 5.1 Continuous Integration (CI)
  
