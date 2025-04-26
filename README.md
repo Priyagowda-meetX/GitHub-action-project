@@ -74,13 +74,16 @@ These secrets are retrieved in the pipeline to authenticate against AWS services
 
   * Action: GitHub Action
   * Purpose: Build Docker image and push to Amazon ECR.
+---
     ``` yaml
     - name: Build, Tag, and Push Docker Image to ECR
   run: |
     docker build -t ${{ env.ECR_REPOSITORY }}:${{ github.sha }} .
     docker tag ${{ env.ECR_REPOSITORY }}:${{ github.sha }} ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
     docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+    
     ```
+    
     Variables:
     * ${{ github.sha }} → Commit SHA used for image tagging.
 
