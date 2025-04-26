@@ -45,5 +45,19 @@ These secrets are retrieved in the pipeline to authenticate against AWS services
  - name: Checkout Repository
    uses: actions/checkout@v3
    ```
+# Step 3: Configure
+ * Action: GitHub Action
+ * Purpose: Configure AWS CLI inside the GitHub runner.
+ * Details: Uses AWS credentials stored in GitHub secrets.
+
+``` yaml
+- name: Configure AWS Credentials
+  uses: aws-actions/configure-aws-credentials@v2
+  with:
+    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    aws-region: your-aws-region
+```
+
 
 
