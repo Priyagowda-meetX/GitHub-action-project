@@ -58,7 +58,7 @@ These secrets are retrieved in the pipeline to authenticate against AWS services
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     aws-region: your-aws-region
 ```
-## Step 4: Login to ECR
+### Step 4: Login to ECR
   * Action: GitHub Action
   * Purpose: Authenticate Docker to AWS Elastic Container Registry (ECR).
   * Details: Allow GitHub runner to push images to private ECR repository.
@@ -69,6 +69,6 @@ These secrets are retrieved in the pipeline to authenticate against AWS services
   uses: aws-actions/amazon-ecr-login@v2
 ```
 
-
+## 5.2 Continuous Deployment (CD)
 
 
