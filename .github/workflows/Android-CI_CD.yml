@@ -42,6 +42,11 @@ jobs:
       - name: Install Firebase CLI
         run: curl -sL https://firebase.tools | bash
 
+      - name: Check APK Path
+        run: |
+          echo "Checking APK path"
+          ls -l app/build/outputs/apk/release/
+
       - name: Upload APK to Firebase App Distribution
         run: |
           firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
