@@ -13,4 +13,14 @@ This document explains the setup, workflow, and functioning of a CI/CD pipeline 
   * Notification Service: Outlook (for email notifications)
 
 ## Flow-of-GitHub-Action
-![Flow of GitHub Action Diagram](Flow-of-GitHub-Actions.png)
+![Flow of GitHub Action Diagram](Flow-of-GitHub-Actions.png) 
+# 3. Workflow Trigger
+  * The workflow is triggered automatically upon PR Merge into the main branch (or a specified branch).
+   
+# 4. Secrets Management
+In GitHub Repository → Settings → Secrets → Actions:
+
+* AWS_ACCESS_KEY_ID: Your AWS IAM User Access Key ID
+* AWS_SECRET_ACCESS_KEY: Your AWS IAM User Secret Access Key
+
+These secrets are retrieved in the pipeline to authenticate against AWS services.
