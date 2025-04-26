@@ -78,12 +78,82 @@ These secrets are retrieved in the pipeline to authenticate against AWS services
     ``` yaml
     - name: Build, Tag, and Push Docker Image to ECR
       run: |
-    docker build -t ${{ env.ECR_REPOSITORY }}:${{ github.sha }} .
-    docker tag ${{ env.ECR_REPOSITORY }}:${{ github.sha }} ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
-    docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+        docker build -t ${{ env.ECR_REPOSITORY }}:${{ github.sha }} .
+        docker tag ${{ env.ECR_REPOSITORY }}:${{ github.sha }} ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+        docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
     
     ```
-    
-   
+##### Variables:
+   *  ${{ github.sha }} → Commit SHA used for image tagging.
+  
+### Step 6: Update ECS Task Definition
+  
+  * Action: GitHub Action
+  *  Purpose: Update ECS task definition with the new Docker image tag.
+``` yaml
+- name: Update ECS Task Definition
+  uses: aws-actions/amazon-ecs-render-task-definition@v1
+  with:
+    task-definition: task-definition.json
+    container-name: your-container-name
+    image: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+```
+### Step 7: Deploy
+  * Action: GitHub Action
+  * Purpose: Update ECS service with the new task definition.
+``` yaml
+- name: Deploy ECS Service
+  uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+  with:
+    service: your-ecs-service-name
+    cluster: your-ecs-cluster-name
+    task-definition: your-updated-task-definition.json
+```
+
+## 6. Notifications
+ * After deployment, an email notification is sent through Outlook integration to the stakeholders/developers to inform them about the deployment status.
+
+## 7. Visual Representation (from the provided diagram)
+``` sql
+GitHub Repository
+        |
+      PR Merge
+        |
+    GitHub Workflow
+        |
+        |--- Check Status (Tests Passed?)
+        |--- Checkout Repo
+        |--- Configure AWS CLI
+        |--- Login to ECR
+        |--- Build and Push Docker Image
+        |--- Update ECS Task Definition
+        |--- Deploy to ECS Service
+        |
+      Send Outlook Notification
+```
+
+## 8. Requirements
+* AWS Account (IAM User with permissions for ECR, ECS)
+* GitHub Repository with code and Dockerfile
+* GitHub Secrets configured
+* ECS Cluster and Service pre-created
+* ECR Repository pre-created
+* Task Definition file template available (JSON)
+
+## 9. Possible Enhancements
+* Add Slack/MS Teams notifications.
+* Add Rollback strategy if deployment fails.
+* Add more environments (Dev, QA, Prod) using branches or environments.
+* Use GitHub Environments protection rules.
+* Add security scanning before pushing the image.
+* Add automated testing step after deployment (Health checks).
+
+# ✅ Conclusion
+This GitHub Actions workflow provides a fully automated CI/CD pipeline from source code merge to AWS ECS deployment, along with email notifications for full visibility.
+
+
+
+
+
 
 
