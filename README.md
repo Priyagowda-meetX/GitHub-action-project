@@ -42,7 +42,7 @@ These secrets are retrieved in the pipeline to authenticate against AWS services
 
 '''yaml
 - name: Checkout Repository
-  uses: actions/checkout@v3
+  uses: actions/checkout@v3 '''
   
 
 
