@@ -24,3 +24,19 @@ In GitHub Repository → Settings → Secrets → Actions:
 * AWS_SECRET_ACCESS_KEY: Your AWS IAM User Secret Access Key
 
 These secrets are retrieved in the pipeline to authenticate against AWS services.
+
+# 5. GitHub Actions Workflow Stages
+ The CI/CD pipeline is split into two main stages:
+ ## 5.1 Continuous Integration (CI)
+ 
+ # Step 1: Check Status
+  *  Action: GitHub Action
+  *  Purpose: Verify Git commit status.
+  *  Details: Ensure all previous tests (unit tests, integration tests) pass before proceeding.
+  *  Outcome: Pipeline continues only if status is successful.
+    
+ # Step 2: Checkout
+  * Action: GitHub Action
+ * Purpose: Checkout source code into the GitHub runner.
+ * Details: Allows workflow to access the repository content.
+
