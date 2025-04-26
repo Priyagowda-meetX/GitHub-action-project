@@ -63,6 +63,12 @@ These secrets are retrieved in the pipeline to authenticate against AWS services
   * Purpose: Authenticate Docker to AWS Elastic Container Registry (ECR).
   * Details: Allow GitHub runner to push images to private ECR repository.
 
+``` yaml
+- name: Login to Amazon ECR
+  id: login-ecr
+  uses: aws-actions/amazon-ecr-login@v2
+```
+
 
 
 
