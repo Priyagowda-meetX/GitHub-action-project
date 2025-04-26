@@ -2,8 +2,9 @@
 ## 1. Introduction
 This document explains the setup, workflow, and functioning of a CI/CD pipeline using GitHub Actions for deploying containerized applications to AWS ECS (Elastic Container Service).
 ## The process involves:
+Once a pull request is merged into the main(or specified branch) branch, the CI/CD pipeline is automatically triggered by the version control system (like GitHub) to build, test, and deploy the updated code.
   * Continuous Integration (CI): Building, testing, and preparing the application.
-  * Continuous Deployment (CD): Pushing Docker images to AWS ECR and updating ECS tasks automatically after a pull request (PR) is merged.
+  * Continuous Deployment (CD): Pushing Docker images to AWS ECR and updating ECS tasks automatically.
 ## 2. System Overview
   * Source Code Repository: GitHub
   * CI/CD Engine: GitHub Actions
