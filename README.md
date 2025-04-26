@@ -40,9 +40,9 @@ These secrets are retrieved in the pipeline to authenticate against AWS services
  * Purpose: Checkout source code into the GitHub runner.
  * Details: Allows workflow to access the repository content.
 
----yaml
+'''yaml
 - name: Checkout Repository
   uses: actions/checkout@v3
-  ---
+  
 
 
