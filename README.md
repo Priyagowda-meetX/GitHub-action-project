@@ -29,13 +29,13 @@ These secrets are retrieved in the pipeline to authenticate against AWS services
  The CI/CD pipeline is split into two main stages:
  ## 5.1 Continuous Integration (CI)
  
- ## Step 1: Check Status
+ ### Step 1: Check Status
   *  Action: GitHub Action
   *  Purpose: Verify Git commit status.
   *  Details: Ensure all previous tests (unit tests, integration tests) pass before proceeding.
   *  Outcome: Pipeline continues only if status is successful.
     
- ## Step 2: Checkout
+ ### Step 2: Checkout
   * Action: GitHub Action
  * Purpose: Checkout source code into the GitHub runner.
  * Details: Allows workflow to access the repository content.
@@ -45,7 +45,7 @@ These secrets are retrieved in the pipeline to authenticate against AWS services
  - name: Checkout Repository
    uses: actions/checkout@v3
    ```
-## Step 3: Configure
+### Step 3: Configure
  * Action: GitHub Action
  * Purpose: Configure AWS CLI inside the GitHub runner.
  * Details: Uses AWS credentials stored in GitHub secrets.
@@ -70,5 +70,19 @@ These secrets are retrieved in the pipeline to authenticate against AWS services
 ```
 
 ## 5.2 Continuous Deployment (CD)
+### Step 5: Build Image
+
+  * Action: GitHub Action
+  * Purpose: Build Docker image and push to Amazon ECR.
+    ``` yaml
+    - name: Build, Tag, and Push Docker Image to ECR
+  run: |
+    docker build -t ${{ env.ECR_REPOSITORY }}:${{ github.sha }} .
+    docker tag ${{ env.ECR_REPOSITORY }}:${{ github.sha }} ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+    docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+    ```
+    Variables:
+    * ${{ github.sha }} → Commit SHA used for image tagging.
+
 
 
