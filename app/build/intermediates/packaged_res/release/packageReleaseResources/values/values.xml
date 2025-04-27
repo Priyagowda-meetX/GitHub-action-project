@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">AndroidCICD</string>
+    <string name="gcm_defaultSenderId" translatable="false">695759292892</string>
+    <string name="google_api_key" translatable="false">AIzaSyDHrbqx78vZZamqL8MvrJpondjfQzsP8xk</string>
+    <string name="google_app_id" translatable="false">1:695759292892:android:f84c9e08eca0c473fda719</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDHrbqx78vZZamqL8MvrJpondjfQzsP8xk</string>
+    <string name="google_storage_bucket" translatable="false">cicddemo-802a3.firebasestorage.app</string>
+    <string name="project_id" translatable="false">cicddemo-802a3</string>
+    <style name="Theme.AndroidCICD" parent="android:Theme.Material.Light.NoActionBar"/>
+</resources>
