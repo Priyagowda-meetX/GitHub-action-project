@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: release-apk  # Artifact name (match in both upload and download steps)
-          path: app/build/outputs/apk/release/app-release.apk  # Ensure APK is here
+          path: app/build/outputs/apk/release/app-release-unsigned.apk  # Ensure APK is here
 
   upload:
     runs-on: ubuntu-latest
