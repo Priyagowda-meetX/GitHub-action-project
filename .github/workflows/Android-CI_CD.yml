@@ -67,8 +67,7 @@ jobs:
       - name: Upload to Firebase App Distribution
         run: |
           firebase appdistribution:distribute ./apk-download/app-release-unsigned.apk \
-            --app ${{ secrets.1:47955896309:android:44efd18405675faba4a2bc }} \
+            --app ${{ secrets.FIREBASE_APP_ID }} \
             --token ${{ secrets.FIREBASE_AUTH_TOKEN }} \
-            --token \
             --groups "Testers" \
             --debug
