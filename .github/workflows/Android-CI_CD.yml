@@ -62,7 +62,7 @@ jobs:
         with:
           name: release-apk
 
-      - name: Check APK Path
+      - name: Check downloaded APK
         run: |
           echo "Checking downloaded APK"
           ls -l
