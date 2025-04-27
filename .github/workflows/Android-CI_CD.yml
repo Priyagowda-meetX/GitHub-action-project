@@ -42,12 +42,12 @@ jobs:
       - name: Upload APK as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release-apk
-          path: app/build/outputs/apk/release/app-release.apk
+          name: release-apk  # This name should match in both upload and download steps
+          path: app/build/outputs/apk/release/app-release.apk  # Ensure APK exists here
 
   upload:
     runs-on: ubuntu-latest
-    needs: build
+    needs: build  # Ensure upload only runs after build completes successfully
     name: Upload APK to Firebase
 
     steps:
@@ -60,12 +60,12 @@ jobs:
       - name: Download built APK
         uses: actions/download-artifact@v4
         with:
-          name: release-apk
+          name: release-apk  # The name must match the artifact name used in the build job
 
       - name: Check downloaded APK
         run: |
           echo "Checking downloaded APK"
-          ls -l
+          ls -l  # Ensure the APK is in the directory after downloading
 
       - name: Upload APK to Firebase App Distribution
         run: |
@@ -75,5 +75,5 @@ jobs:
             --groups "Testers" \
             --debug
         env:
-          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}  # Ensure these are set in GitHub secrets
           FIREBASE_AUTH_TOKEN: ${{ secrets.FIREBASE_AUTH_TOKEN }}
