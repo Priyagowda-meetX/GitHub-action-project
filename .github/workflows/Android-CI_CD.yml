@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - Pre-Production
-  workflow_dispatch:    # Allow manual trigger too (optional but useful!)
+  workflow_dispatch:
 
 jobs:
   build:
@@ -57,24 +57,20 @@ jobs:
           path: ./apk-download
 
       - name: Install Firebase CLI
-        run: curl -sL https://firebase.tools | bash
-
-      - name: Verify Downloaded APK
-        run: |
-          echo "Verifying downloaded APK..."
-          ls -l ./apk-download
+        run: npm install -g firebase-tools
 
       - name: Set up Google Credentials
         run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > $HOME/github-action-project-43fd9-c98e4b4245ef.json
 
       - name: Authenticate with Google Cloud
         run: |
-          gcloud auth activate-service-account --key-file=$HOME/github-action-project-43fd9-c98e4b4245ef.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/github-action-project-43fd9-c98e4b4245ef.json
+          gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
 
       - name: Upload to Firebase App Distribution
         run: |
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/github-action-project-43fd9-c98e4b4245ef.json
           firebase appdistribution:distribute ./apk-download/app-release-unsigned.apk \
-            --app secrets.1:47955896309:android:44efd18405675faba4a2bc \
-            --token ${{ secrets.FIREBASE_AUTH_TOKEN }} \
+            --app 1:47955896309:android:44efd18405675faba4a2bc \
             --groups "Testers" \
             --debug
