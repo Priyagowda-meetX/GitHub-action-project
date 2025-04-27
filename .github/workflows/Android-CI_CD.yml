@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -24,15 +24,15 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
       - name: Build APK
-        run: ./gradlew :app:assembleRelease --no-daemon
+        run: ./gradlew assembleRelease --no-daemon
 
       - name: Run Android Tests
-        run: ./gradlew :app:test --no-daemon
+        run: ./gradlew test --no-daemon
 
       - name: Check if APK Exists
         run: |
@@ -44,6 +44,7 @@ jobs:
         with:
           name: app-release
           path: app/build/outputs/apk/release/app-release.apk
+          retention-days: 7
 
   upload:
     runs-on: ubuntu-latest
@@ -51,29 +52,24 @@ jobs:
     name: Upload APK to Firebase
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Install Firebase CLI
-        run: curl -sL https://firebase.tools | bash
-
       - name: Download built APK
         uses: actions/download-artifact@v4
         with:
           name: app-release
+          path: ./apk-download
+
+      - name: Install Firebase CLI
+        run: curl -sL https://firebase.tools | bash
 
       - name: Check downloaded APK
         run: |
           echo "Checking downloaded APK"
-          ls -l
+          ls -l ./apk-download
 
       - name: Upload APK to Firebase App Distribution
         run: |
-          firebase appdistribution:distribute app-release.apk \
+          firebase appdistribution:distribute ./apk-download/app-release.apk \
             --app ${{ secrets.FIREBASE_APP_ID }} \
             --token ${{ secrets.FIREBASE_AUTH_TOKEN }} \
             --groups "Testers" \
             --debug
-        env:
-          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
-          FIREBASE_AUTH_TOKEN: ${{ secrets.FIREBASE_AUTH_TOKEN }}
