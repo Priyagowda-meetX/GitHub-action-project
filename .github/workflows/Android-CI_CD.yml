@@ -52,7 +52,7 @@ jobs:
     name: Upload APK to Firebase
 
     steps:
-      - name: Download built APK
+      - name: Download APK Artifact
         uses: actions/download-artifact@v4
         with:
           name: app-release
