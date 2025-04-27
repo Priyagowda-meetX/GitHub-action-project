@@ -42,7 +42,7 @@ jobs:
       - name: Upload APK as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release-apk
+          name: app-release
           path: app/build/outputs/apk/release/app-release.apk
 
   upload:
@@ -60,7 +60,7 @@ jobs:
       - name: Download built APK
         uses: actions/download-artifact@v4
         with:
-          name: release-apk
+          name: app-release
 
       - name: Check downloaded APK
         run: |
