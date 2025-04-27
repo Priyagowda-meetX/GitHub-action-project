@@ -65,11 +65,11 @@ jobs:
           ls -l ./apk-download
 
       - name: Set up Google Credentials
-        run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > $HOME/gcloud-key.json
+        run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > $HOME/github-action-project-43fd9-c98e4b4245ef.json
 
       - name: Authenticate with Google Cloud
         run: |
-          gcloud auth activate-service-account --key-file=$HOME/gcloud-key.json
+          gcloud auth activate-service-account --key-file=$HOME/github-action-project-43fd9-c98e4b4245ef.json
 
       - name: Upload to Firebase App Distribution
         run: |
