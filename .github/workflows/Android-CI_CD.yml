@@ -69,5 +69,6 @@ jobs:
           firebase appdistribution:distribute ./apk-download/app-release-unsigned.apk \
             --app ${{ secrets.1:47955896309:android:44efd18405675faba4a2bc }} \
             --token ${{ secrets.FIREBASE_AUTH_TOKEN }} \
+            --token \
             --groups "Testers" \
             --debug
