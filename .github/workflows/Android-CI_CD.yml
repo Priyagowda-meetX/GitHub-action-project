@@ -5,9 +5,6 @@ on:
     branches:
       - Pre-Production
 
-permissions:
-  contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,10 +12,10 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v2
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -37,13 +34,15 @@ jobs:
       - name: Run Android Tests
         run: ./gradlew :app:test --no-daemon
 
-      - name: Check APK Exists
-        run: ls app/build/outputs/apk/release/app-release.apk
+      - name: Check if APK Exists
+        run: |
+          echo "Checking APK existence..."
+          ls -l app/build/outputs/apk/release/
 
-      - name: Upload APK Artifact
+      - name: Upload APK as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-release.apk
+          name: release-apk
           path: app/build/outputs/apk/release/app-release.apk
 
   upload:
@@ -52,23 +51,29 @@ jobs:
     name: Upload APK to Firebase
 
     steps:
-      - name: Download APK
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Firebase CLI
+        run: curl -sL https://firebase.tools | bash
+
+      - name: Download built APK
         uses: actions/download-artifact@v4
         with:
-          name: app-release.apk
+          name: release-apk
 
-      - name: Validate APK Exists
+      - name: Check downloaded APK
         run: |
-          if [ ! -f app-release.apk ]; then
-            echo "::error::APK file missing!"
-            exit 1
-          fi
+          echo "Checking downloaded APK"
+          ls -l
 
-      - name: Upload to Firebase
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
-        with:
-          appId: ${{ secrets.FIREBASE_APP_ID }}
-          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
-          groups: testers
-          file: app-release.apk
-          releaseNotes: "New Pre-Production build"
+      - name: Upload APK to Firebase App Distribution
+        run: |
+          firebase appdistribution:distribute app-release.apk \
+            --app ${{ secrets.FIREBASE_APP_ID }} \
+            --token ${{ secrets.FIREBASE_AUTH_TOKEN }} \
+            --groups "Testers" \
+            --debug
+        env:
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          FIREBASE_AUTH_TOKEN: ${{ secrets.FIREBASE_AUTH_TOKEN }}
