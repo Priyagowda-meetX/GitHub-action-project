@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: release
-          path: app/build/outputs/apk/release/app-release.apk
+          path: app/build/outputs/apk/release/app-release-unsigned.apk
           retention-days: 7
 
   upload:
@@ -68,7 +68,7 @@ jobs:
 
       - name: Upload APK to Firebase App Distribution
         run: |
-          firebase appdistribution:distribute ./apk-download/app-release.apk \
+          firebase appdistribution:distribute ./apk-download/app-release-unsigned.apk \
             --app ${{ secrets.FIREBASE_APP_ID }} \
             --token ${{ secrets.FIREBASE_AUTH_TOKEN }} \
             --groups "Testers" \
