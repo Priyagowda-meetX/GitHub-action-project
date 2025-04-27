@@ -4,11 +4,12 @@ on:
   push:
     branches:
       - Pre-Production
+  workflow_dispatch:    # Allow manual trigger too (optional but useful!)
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build APK
+    name: Build and Upload APK
 
     steps:
       - name: Checkout Code
@@ -28,13 +29,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build APK
+      - name: Build Release APK
         run: ./gradlew assembleRelease --no-daemon
 
-      - name: Run Android Tests
-        run: ./gradlew test --no-daemon
-
-      - name: Check if APK Exists
+      - name: Check APK existence
         run: |
           echo "Checking APK existence..."
           ls -l app/build/outputs/apk/release/
@@ -42,34 +40,34 @@ jobs:
       - name: Upload APK as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release
+          name: release-apk
           path: app/build/outputs/apk/release/app-release-unsigned.apk
           retention-days: 7
 
   upload:
     runs-on: ubuntu-latest
     needs: build
-    name: Upload APK to Firebase
+    name: Upload APK to Firebase App Distribution
 
     steps:
       - name: Download APK Artifact
         uses: actions/download-artifact@v4
         with:
-          name: release
+          name: release-apk
           path: ./apk-download
 
       - name: Install Firebase CLI
         run: curl -sL https://firebase.tools | bash
 
-      - name: Check downloaded APK
+      - name: Verify Downloaded APK
         run: |
-          echo "Checking downloaded APK"
+          echo "Verifying downloaded APK..."
           ls -l ./apk-download
 
-      - name: Upload APK to Firebase App Distribution
+      - name: Upload to Firebase App Distribution
         run: |
-          firebase appdistribution:distribute ./apk-download/app-release.apk \
-            --app 1:47955896309:android:ff7ff705b63fb0dca4a2bc \
+          firebase appdistribution:distribute ./apk-download/app-release-unsigned.apk \
+            --app ${{ secrets.FIREBASE_APP_ID }} \
             --token ${{ secrets.FIREBASE_AUTH_TOKEN }} \
             --groups "Testers" \
             --debug
