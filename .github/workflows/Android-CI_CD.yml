@@ -29,13 +29,18 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build APK
-        run: ./gradlew assembleRelease --no-daemon
+        run: ./gradlew :app:assembleRelease --no-daemon
 
       - name: Run Android Tests
-        run: ./gradlew test --no-daemon
+        run: ./gradlew :app:test --no-daemon
+
+      - name: Check if APK Exists
+        run: |
+          echo "Checking APK existence..."
+          ls -l app/build/outputs/apk/release/
 
       - name: Upload APK as Artifact
-        uses: actions/upload-artifact@v4   
+        uses: actions/upload-artifact@v4
         with:
           name: release-apk
           path: app/build/outputs/apk/release/app-release.apk
@@ -53,13 +58,13 @@ jobs:
         run: curl -sL https://firebase.tools | bash
 
       - name: Download built APK
-        uses: actions/download-artifact@v4   
+        uses: actions/download-artifact@v4
         with:
           name: release-apk
 
       - name: Check APK Path
         run: |
-          echo "Checking APK path"
+          echo "Checking downloaded APK"
           ls -l
 
       - name: Upload APK to Firebase App Distribution
