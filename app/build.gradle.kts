@@ -10,7 +10,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.Priya"
+        applicationId = "com.appsbase.androidcicd"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
