@@ -74,3 +74,22 @@ jobs:
             --app 1:47955896309:android:44efd18405675faba4a2bc \
             --groups "Testers" \
             --debug
+
+  additional-steps:
+    runs-on: ubuntu-latest
+    needs: upload
+    name: Additional Tasks for OAuth or Google Integration
+
+    steps:
+      - name: Set up OAuth Credentials for API Access
+        run: |
+          echo '${{ secrets.GOOGLE_OAUTH_CREDENTIALS }}' > $HOME/oauth-credentials.json
+          
+      - name: Authenticate and Access Google APIs
+        run: |
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/oauth-credentials.json
+          gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+          
+      - name: Run Google API Command (example)
+        run: |
+          curl -X POST https://some-google-api.com/endpoint --header "Authorization: Bearer $GOOGLE_APPLICATION_CREDENTIALS"
