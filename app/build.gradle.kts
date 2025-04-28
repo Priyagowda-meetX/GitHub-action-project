@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.Priya"
+    namespace = "com.appsbase.androidcicd"
     compileSdk = 35
 
     defaultConfig {
