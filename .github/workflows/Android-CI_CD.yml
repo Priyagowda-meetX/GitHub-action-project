@@ -66,7 +66,8 @@ jobs:
         run: |
           export GOOGLE_APPLICATION_CREDENTIALS=$HOME/github-action-project-43fd9-3ce3fa9d132a.json
           gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-          gcloud auth application-default login --quiet  # <-- THIS LINE IS ADDED (very important)
+          gcloud config set project github-action-project-43fd9  # <-- ADDED this important line
+          # removed 'gcloud auth application-default login'
 
       - name: Upload to Firebase App Distribution
         env:
@@ -91,7 +92,15 @@ jobs:
         run: |
           export GOOGLE_APPLICATION_CREDENTIALS=$HOME/OAuth2-credentials.json
           gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-          
+          gcloud config set project github-action-project-43fd9  # <-- ADDED this important line
+
+      - name: Get Access Token
+        id: access_token
+        run: |
+          ACCESS_TOKEN=$(gcloud auth print-access-token)
+          echo "ACCESS_TOKEN=$ACCESS_TOKEN" >> $GITHUB_ENV
+
       - name: Run Google API Command (example)
         run: |
-          curl -X POST https://some-google-api.com/endpoint --header "Authorization: Bearer $GOOGLE_APPLICATION_CREDENTIALS"
+          curl -X POST https://some-google-api.com/endpoint \
+            --header "Authorization: Bearer ${{ env.ACCESS_TOKEN }}"
