@@ -65,7 +65,7 @@ jobs:
 
       - name: Authenticate with Google Cloud
         run: |
-          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/github-action-project-43fd9-3ce3fa9d132a.json
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ env.HOME }}/github-action-project-43fd9-3ce3fa9d132a.json
           gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
 
       - name: Upload to Firebase App Distribution
