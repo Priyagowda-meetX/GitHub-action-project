@@ -60,18 +60,18 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Set up Google Credentials
-        run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > $HOME/github-action-project-43fd9-3ce3fa9d132a.json
+        run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > $HOME/github-action-project-f1a53.json
 
       - name: Authenticate with Google Cloud
         run: |
-          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/github-action-project-43fd9-3ce3fa9d132a.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/github-action-project-f1a53.json
           gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
 
       - name: Upload to Firebase App Distribution
         run: |
-          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/github-action-project-43fd9-3ce3fa9d132a.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/github-action-project-f1a53.json
           firebase appdistribution:distribute ./apk-download/app-release-unsigned.apk \
-            --app 1:47955896309:android:44efd18405675faba4a2bc \
+            --app 1:548825248171:android:2bd20e9856d2ca8ce8a2ee \
             --groups "Testers" \
             --debug
 
