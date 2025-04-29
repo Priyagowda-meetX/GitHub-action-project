@@ -59,17 +59,19 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
+      # ✅ UPDATED: Securely store and load service account credentials from GitHub Secret
       - name: Set up Google Credentials
-        run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > $HOME/github-action-project-f1a53.json
+        run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}" > $HOME/firebase-credentials.json
 
+      # ✅ UPDATED: Authenticate with Google Cloud
       - name: Authenticate with Google Cloud
         run: |
-          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/github-action-project-f1a53.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase-credentials.json
           gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
 
       - name: Upload to Firebase App Distribution
         run: |
-          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/github-action-project-f1a53.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase-credentials.json
           firebase appdistribution:distribute ./apk-download/app-release-unsigned.apk \
             --app 1:548825248171:android:2bd20e9856d2ca8ce8a2ee \
             --groups "Testers" \
@@ -81,15 +83,17 @@ jobs:
     name: Additional Tasks for oauth2 or Google Integration
 
     steps:
+      # ✅ UPDATED: Load OAuth2 credentials from a GitHub secret
       - name: Set up oauth2 Credentials for API Access
-        run: |
-          echo '${{ secrets.GOOGLE_OAUTH_CREDENTIALS }}' > $HOME/oauth2-credentials.json
-          
+        run: echo "${{ secrets.GOOGLE_OAUTH_CREDENTIALS }}" > $HOME/oauth2-credentials.json
+
       - name: Authenticate and Access Google APIs
         run: |
           export GOOGLE_APPLICATION_CREDENTIALS=$HOME/oauth2-credentials.json
           gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-          
+
       - name: Run Google API Command (example)
         run: |
-          curl -X POST https://some-google-api.com/endpoint --header "Authorization: Bearer $GOOGLE_APPLICATION_CREDENTIALS"
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/oauth2-credentials.json
+          # Replace this curl with your actual Google API request
+          echo "Example API call using auth token..."
