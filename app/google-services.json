@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "47955896309",
-    "project_id": "github-action-project-43fd9",
-    "storage_bucket": "github-action-project-43fd9.firebasestorage.app"
+    "project_number": "548825248171",
+    "project_id": "github-action-project-f1a53",
+    "storage_bucket": "github-action-project-f1a53.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:47955896309:android:ef33d2dd7f780c47a4a2bc",
+        "mobilesdk_app_id": "1:548825248171:android:2bd20e9856d2ca8ce8a2ee",
         "android_client_info": {
           "package_name": "com.appsbase.androidcic"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyANPlnMB6-lStNRqBX59F0y9n-PySMHrR4"
+          "current_key": "AIzaSyD4mZpEzvah6wo6poDOEMQ1xrapOOcolVw"
         }
       ],
       "services": {
