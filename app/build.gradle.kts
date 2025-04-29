@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.appsbase.androidcicd"
+    namespace = "com.appsbase.androidcic"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.appsbase.androidcicd"
+        applicationId = "com.appsbase.androidcic"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
