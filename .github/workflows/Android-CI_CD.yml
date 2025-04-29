@@ -66,11 +66,10 @@ jobs:
         run: |
           export GOOGLE_APPLICATION_CREDENTIALS=$HOME/silent-effect-458307-f4-3ab91b9ee190.json
           gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-          
+
       - name: Upload to Firebase App Distribution
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: $HOME/silent-effect-458307-f4-3ab91b9ee190.json
         run: |
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/silent-effect-458307-f4-3ab91b9ee190.json
           firebase appdistribution:distribute ./apk-download/app-release-unsigned.apk \
             --app 1:47955896309:android:44efd18405675faba4a2bc \
             --groups "Testers" \
