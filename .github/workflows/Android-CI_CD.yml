@@ -61,13 +61,12 @@ jobs:
 
       - name: Set up Google Credentials
         run: |
-          echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" | base64 --decode > "$HOME/github-action-project-43fd9-3ce3fa9d132a.json"
+          echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > $HOME/github-action-project-43fd9-3ce3fa9d132a.json
 
       - name: Authenticate with Google Cloud
         run: |
-          export GOOGLE_APPLICATION_CREDENTIALS="$HOME/github-action-project-43fd9-3ce3fa9d132a.json"
-          gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
-          gcloud config set project github-action-project-43fd9
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/github-action-project-43fd9-3ce3fa9d132a.json
+          gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
 
       - name: Upload to Firebase App Distribution
         env:
@@ -86,12 +85,12 @@ jobs:
     steps:
       - name: Set up OAuth2 Credentials for API Access
         run: |
-          echo '${{ secrets.GOOGLE_OAUTH_CREDENTIALS }}' > "$HOME/OAuth2-credentials.json"
+          echo '${{ secrets.GOOGLE_OAUTH_CREDENTIALS }}' > $HOME/OAuth2-credentials.json
           
       - name: Authenticate and Access Google APIs
         run: |
-          export GOOGLE_APPLICATION_CREDENTIALS="$HOME/OAuth2-credentials.json"
-          gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/OAuth2-credentials.json
+          gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
           
       - name: Run Google API Command (example)
         run: |
