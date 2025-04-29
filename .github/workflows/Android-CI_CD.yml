@@ -61,7 +61,7 @@ jobs:
 
       - name: Set up Google Credentials
         run: |
-          echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > $HOME/github-action-project-43fd9-3ce3fa9d132a.json
+          echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > ${{ env.HOME }}/github-action-project-43fd9-3ce3fa9d132a.json
 
       - name: Authenticate with Google Cloud
         run: |
@@ -70,7 +70,7 @@ jobs:
 
       - name: Upload to Firebase App Distribution
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: $HOME/github-action-project-43fd9-3ce3fa9d132a.json
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ env.HOME }}/github-action-project-43fd9-3ce3fa9d132a.json
         run: |
           firebase appdistribution:distribute ./apk-download/app-release-unsigned.apk \
             --app 1:47955896309:android:44efd18405675faba4a2bc \
