@@ -60,18 +60,20 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Set up Google Credentials
-        run: printf '%s' "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}" > $HOME/silent-effect-458307-f4.json
+        run: echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}' > $HOME/silent-effect-458307-f4-3ab91b9ee190.json
 
       - name: Authenticate with Google Cloud
         run: |
-          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/silent-effect-458307-f4.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/silent-effect-458307-f4-3ab91b9ee190.json
           gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+          gcloud auth application-default login --quiet  # <-- THIS LINE IS ADDED (very important)
 
       - name: Upload to Firebase App Distribution
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: $HOME/silent-effect-458307-f4-3ab91b9ee190.json
         run: |
-          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/silent-effect-458307-f4.json
           firebase appdistribution:distribute ./apk-download/app-release-unsigned.apk \
-            --app 1:548825248171:android:2bd20e9856d2ca8ce8a2ee \
+            --app 1:47955896309:android:44efd18405675faba4a2bc \
             --groups "Testers" \
             --debug
 
