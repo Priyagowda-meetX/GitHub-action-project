@@ -66,8 +66,7 @@ jobs:
         run: |
           export GOOGLE_APPLICATION_CREDENTIALS=$HOME/silent-effect-458307-f4-3ab91b9ee190.json
           gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-          gcloud auth application-default login --quiet  # <-- THIS LINE IS ADDED (very important)
-
+          
       - name: Upload to Firebase App Distribution
         env:
           GOOGLE_APPLICATION_CREDENTIALS: $HOME/silent-effect-458307-f4-3ab91b9ee190.json
