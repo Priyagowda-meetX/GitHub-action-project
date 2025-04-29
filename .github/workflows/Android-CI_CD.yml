@@ -61,7 +61,7 @@ jobs:
 
       # ✅ UPDATED: Securely store and load service account credentials from GitHub Secret
       - name: Set up Google Credentials
-        run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}" > $HOME/firebase-credentials.json
+        run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/firebase-credentials.json
 
       # ✅ UPDATED: Authenticate with Google Cloud
       - name: Authenticate with Google Cloud
